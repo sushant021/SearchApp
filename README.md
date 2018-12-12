@@ -1,5 +1,5 @@
 # SearchApp
-Django Search with Jquery Autocomplete
+
 
 A simple book search app made with django and jquery autocomplete.
 
