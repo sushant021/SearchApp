@@ -1,0 +1,96 @@
+{% extends 'base.html'%}
+{% block title %} Search App {%endblock%}
+
+{% block content %}
+
+<div class="container">
+
+  <div class="row text-center">
+
+    <section class="col-12">
+
+      <form id= "search" method="POST" action="{% url 'SearchApp:index' %}" >
+  
+        {% csrf_token %}
+
+        <div class="form-group" style="display: inline-block;">
+
+          <input type="text" class="form-control" id= "txtSearch" name="txtSearch" size="60" placeholder="Enter book name or author name">
+        
+        </div>
+        
+
+        <button type="submit" class="btn btn-default btn-submit" >Submit</button>
+
+       </form>
+
+    </section>
+
+      
+  </div>
+
+  <div class="row py-3">
+
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+
+      <h5>Available Books</h5> 
+
+    
+    </div>
+    <!--
+    <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+      <a href="{% url 'SearchApp:index' %}" class="btn btn-primary">View All Books</a>
+    </div>-->
+  
+  </div>
+
+  <div class="row " style="border: 1px solid #078bbd29;box-shadow: 0px 0px 20px; height: 350px; overflow-y: scroll;">
+    
+    <div class="col-12">
+      {% if book_set%}
+       {# do nothing here #}
+      {% else %}
+      <p>No Books Available</p>
+      {%endif%}
+           
+      {% for book in book_set%}
+
+          <div class="row mb-2 p-2 bg-light">
+            
+            <div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+              
+              <h6>{{book.title}}</h6>
+              <small>by {{book.author}} </small>
+
+            </div>
+
+            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+              <small> Published : {{book.published.year}}</small>
+            </div>
+
+          </div>
+
+      {% endfor%}
+
+
+    </div>
+
+  </div>
+
+  
+</div>
+
+
+
+
+<script>
+        $(document).ready(function(){ 
+            $("#txtSearch").autocomplete({
+                source: "{% url 'SearchApp:autocompleteBook' %}",
+                minLength: 2,
+              
+              });
+        });
+</script>
+  
+{% endblock %}
